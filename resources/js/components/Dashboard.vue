@@ -120,7 +120,8 @@ export default {
     methods: {
 
         slotLimitCheck(slot) {
-            let sum = this.cafData[slot].reduce((a, b) => {
+            let sum = 0;
+            sum = this.cafData[slot].reduce((a, b) => {
                 a = parseInt(a);
                 b = parseInt(b);
                 return a + b;
@@ -159,6 +160,18 @@ export default {
             this.renderCafData = true;
         },
 
+
+        loadLast() {
+            axios.get('/api/cafeteria').then(response => {
+                console.log(response.data);
+                this.cafData = response.data.data;
+                this.yearly = response.data.yearly_limit;
+
+            })
+
+
+        },
+
         save() {
             if (this.fullLimit()) {
                 axios.post('/api/cafeteria', {
@@ -175,7 +188,7 @@ export default {
         }
     },
     created() {
-        this.autoFill();
+        this.loadLast();
     }
 
 

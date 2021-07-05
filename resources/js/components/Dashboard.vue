@@ -113,17 +113,16 @@ export default {
     computed: {
         months() {
             return moment.months()
-        }
-    },
-    methods: {
-
-        validate() {
-
         },
 
 
+    },
+    methods: {
+
         slotLimitCheck(slot) {
-            var sum = this.cafData[slot].reduce(function (a, b) {
+            let sum = this.cafData[slot].reduce((a, b) => {
+                a = parseInt(a);
+                b = parseInt(b);
                 return a + b;
             }, 0);
             console.log(slot + ': ' + sum);

@@ -16,7 +16,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <v-col>
-                                    <strong>Maradék összeg:</strong>
+                                    <strong>Maradék összeg: {{ rest }}</strong>
                                 </v-col>
                             </div>
 
@@ -114,20 +114,31 @@ export default {
         months() {
             return moment.months()
         },
+        rest() {
+            this.renderCafData = false;
+            let sum = 0;
+            Object.keys(this.slots).forEach(key => {
+                sum += this.slotSum(key)
+            })
+            this.renderCafData = true;
+            return parseInt(this.yearly - sum);
 
-
+        }
     },
     methods: {
 
-        slotLimitCheck(slot) {
+        slotSum(slot) {
             let sum = 0;
-            sum = this.cafData[slot].reduce((a, b) => {
-                a = parseInt(a);
-                b = parseInt(b);
-                return a + b;
-            }, 0);
-            console.log(slot + ': ' + sum);
-            return parseInt(sum) >= parseInt(this.slotLimit);
+            this.cafData[slot].forEach(val => {
+                if (val) {
+                    sum += parseInt(val);
+                }
+            })
+            return sum;
+        },
+
+        slotLimitCheck(slot) {
+            return parseInt(this.slotSum(slot)) >= parseInt(this.slotLimit);
         },
 
         fullLimit() {

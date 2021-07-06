@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CafDataRule;
+use App\Rules\FullLimit;
+use App\Rules\SlotLimit;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CafeteriaRequest extends FormRequest
@@ -26,6 +29,7 @@ class CafeteriaRequest extends FormRequest
         return [
             "slotLimit" => "required|numeric",
             "fullLimit" => "required|numeric",
+            "cafData"   => ['required', new FullLimit(), new SlotLimit()],
         ];
 
     }

@@ -19,7 +19,7 @@ class CafeteriaController extends Controller
      */
     public function index()
     {
-        return response(Cafeteria::latest()->first());
+        return response(Cafeteria::latest()->first() ?? []);
     }
 
     public function store(CafeteriaRequest $request)

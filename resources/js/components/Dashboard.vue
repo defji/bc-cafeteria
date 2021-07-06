@@ -175,10 +175,14 @@ export default {
         loadLast() {
             axios.get('/api/cafeteria').then(response => {
                 console.log(response.data);
-                this.cafData = response.data.data;
-                this.yearly = response.data.yearly_limit;
+                if (response.data.length > 0) {
+                    this.cafData = response.data.data;
+                    this.yearly = response.data.yearly_limit;
+                }
 
-            })
+            }).catch(error => {
+                console.log('empty result');
+            });
 
 
         },
